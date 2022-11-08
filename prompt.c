@@ -3,6 +3,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/**
+ * prompt - shows shell prompt and waits for user to
+ * enter a command
+ *
+ * Return: void
+*/
 char *prompt(void)
 {
 	char *input = NULL;
@@ -15,7 +21,8 @@ char *prompt(void)
 	if (chars_read == -1)
 		perror("Couldn't read input");
 
-	input[chars_read - 1] = '\0';
+	/* Get rid of the new line character*/
+	input[chars_read - 1] = ' ';
 
 	return (input);
 }
