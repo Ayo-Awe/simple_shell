@@ -6,6 +6,8 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
+void fork_n_execute(char **args, char *env[], char *argv[]);
+
 /**
  * main - entry point
  * @argc: numbers of command line arguments
@@ -16,43 +18,72 @@
 */
 int main(__attribute__((unused)) int argc, char *argv[], char *env[])
 {
-	pid_t child;
-	char *input = NULL;
-	int status;
-
+	char *input = NULL, *cmd;
 	char **args;
 
 	while (*(input = prompt()) != EOF)
 	{
 
 		args = split(input);
-
-		if (_strcmp(args[0], "exit") == 0)
-		{
-			free(input);
-			exit(1);
-		}
-
-
-		child = fork();
-
-
-		if (child == 0)
-		{
-			if (execve(args[0], args, env) == -1)
-			{
-				perror(argv[0]);
-				return (1);
-			}
-		}
-		else
-		{
-			wait(&status);
-		}
-
 		free(input);
+
+		/* Check if command is  an exit shell command*/
+		if (_strcmp(args[0], "exit") == 0)
+			exit(1);
+
+		/* Get full command path e.g ls -> /bin/ls */
+		cmd = get_command(args[0]);
+
+		if (!cmd)
+		{
+			/* If command doesn't exist skip the current execute */
+			printf("%s: command not found\n", args[0]);
+			continue;
+		}
+
+		/* Free previous command before overwriting it*/
+		free(args[0]);
+		args[0] = cmd;
+
+		/* Create a child process and execute the command in the child process*/
+		fork_n_execute(args, env, argv);
+
+		/* Free all args */
 	}
 
 	return (0);
 }
 
+/**
+ * fork_n_execute - creates a child process of the main process and executes a
+ * command in it
+ * @args: An array containing the command and the command arguments where
+ * args[0] is the command itself
+ * @env: An array of the environment variables
+ * @argv: The array arguments passed into the executing program
+ *
+ * Return: void
+*/
+void fork_n_execute(char **args, char *env[], char *argv[])
+{
+	pid_t child;
+	int status;
+
+	child = fork();
+
+	/* Execute command only if the current process is the child process*/
+	if (child == 0)
+	{
+		if (execve(args[0], args, env) == -1)
+		{
+			perror(argv[0]);
+			exit(1);
+		}
+	}
+	else
+	{
+		/* Wait for child process to exit before continuing*/
+		wait(&status);
+	}
+
+}
