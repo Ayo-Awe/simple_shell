@@ -6,7 +6,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-void fork_n_execute(char **args, char *env[], char *argv[]);
+void fork_n_execute(char **args, char *env[], char *argv[], int *status);
 
 /**
  * main - entry point
@@ -20,13 +20,15 @@ int main(__attribute__((unused)) int argc, char *argv[], char *env[])
 {
 	char *input = NULL, *cmd;
 	char **args;
-	int exitCode = 1;
+	int exitCode = 1, status;
 
 	while (*(input = prompt()) != EOF)
 	{
 
 		args = split(input);
 		free(input);
+
+		/* Handle replacements */
 
 		/* Check if command is  an exit shell command*/
 		if (_strcmp(args[0], "exit") == 0)
@@ -54,7 +56,7 @@ int main(__attribute__((unused)) int argc, char *argv[], char *env[])
 		args[0] = cmd;
 
 		/* Create a child process and execute the command in the child process*/
-		fork_n_execute(args, env, argv);
+		fork_n_execute(args, env, argv, &status);
 
 		/* Free all args */
 		free_split(args);
@@ -70,13 +72,14 @@ int main(__attribute__((unused)) int argc, char *argv[], char *env[])
  * args[0] is the command itself
  * @env: An array of the environment variables
  * @argv: The array arguments passed into the executing program
+ * @status: an integer pointer where the status of the
+ * executed process is stored
  *
  * Return: void
 */
-void fork_n_execute(char **args, char *env[], char *argv[])
+void fork_n_execute(char **args, char *env[], char *argv[], int *status)
 {
 	pid_t child;
-	int status;
 
 	child = fork();
 
@@ -92,7 +95,7 @@ void fork_n_execute(char **args, char *env[], char *argv[])
 	else
 	{
 		/* Wait for child process to exit before continuing*/
-		wait(&status);
+		wait(status);
 	}
 
 }

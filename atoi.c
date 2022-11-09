@@ -9,9 +9,14 @@
 */
 int _atoi(char *str)
 {
-	int len = _strlen(str);
+	int len;
 	int num = 0;
 	int i = 0;
+
+	if (!str)
+		return (-1);
+
+	len = _strlen(str);
 
 	for (i = (len - 1); i >= 0; i--)
 	{
