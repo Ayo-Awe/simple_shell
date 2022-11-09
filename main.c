@@ -29,7 +29,10 @@ int main(__attribute__((unused)) int argc, char *argv[], char *env[])
 
 		/* Check if command is  an exit shell command*/
 		if (_strcmp(args[0], "exit") == 0)
+		{
+			free_split(args);
 			exit(1);
+		}
 
 		/* Get full command path e.g ls -> /bin/ls */
 		cmd = get_command(args[0]);
@@ -38,6 +41,7 @@ int main(__attribute__((unused)) int argc, char *argv[], char *env[])
 		{
 			/* If command doesn't exist skip the current execute */
 			printf("%s: command not found\n", args[0]);
+			free_split(args);
 			continue;
 		}
 
@@ -49,6 +53,7 @@ int main(__attribute__((unused)) int argc, char *argv[], char *env[])
 		fork_n_execute(args, env, argv);
 
 		/* Free all args */
+		free_split(args);
 	}
 
 	return (0);

@@ -7,7 +7,7 @@
 
 
 /**
- * handle_command - checks if a command exists
+ * get_command - checks if a command exists
  * @command: a malloc'd string pointer representing command
  *
  * Return: pointer to original command string if command
@@ -17,21 +17,35 @@
 char *get_command(char *command)
 {
 	struct stat st;
-	char *prefixed_command = prefix("/bin/", command);
+	char *bin_command = prefix("/bin/", command);
+	char *custom_command = prefix("./programs/", command);
+	char *command_copy = _strdup(command);
 
-	if (!prefixed_command)
+	if (!bin_command || !custom_command || !command_copy)
 		return (NULL);
 
-	/* Path doesn't exists */
-	if (stat(command, &st) == 0)
+	/* Path exists */
+	if (stat(command_copy, &st) == 0)
 	{
-		free(prefixed_command);
-		return (command);
+		free(bin_command);
+		free(custom_command);
+		return (command_copy);
 	}
-	else if (stat(prefixed_command, &st) == 0)
+
+	free(command_copy);
+
+	if (stat(bin_command, &st) == 0)
 	{
-		return (prefixed_command);
+		free(custom_command);
+		return (bin_command);
 	}
+
+	free(bin_command);
+
+	if (stat(custom_command, &st) == 0)
+		return (custom_command);
+
+	free(custom_command);
 
 	return (NULL);
 }
