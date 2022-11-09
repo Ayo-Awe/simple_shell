@@ -20,6 +20,7 @@ int main(__attribute__((unused)) int argc, char *argv[], char *env[])
 {
 	char *input = NULL, *cmd;
 	char **args;
+	int exitCode = 1;
 
 	while (*(input = prompt()) != EOF)
 	{
@@ -30,8 +31,11 @@ int main(__attribute__((unused)) int argc, char *argv[], char *env[])
 		/* Check if command is  an exit shell command*/
 		if (_strcmp(args[0], "exit") == 0)
 		{
-			free_split(args);
-			exit(1);
+			exitCode = _atoi(args[1]);
+			if (exitCode == -1)
+				exit(1);
+
+			exit(exitCode);
 		}
 
 		/* Get full command path e.g ls -> /bin/ls */

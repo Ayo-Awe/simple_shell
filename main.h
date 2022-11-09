@@ -13,4 +13,6 @@ char *get_command(char *command);
 char *_strcat(char *dest, char *src);
 char *prefix(char *prefix, char *str);
 char *_strdup(char *str);
+int _pow(int x, int y);
+int _atoi(char *str);
 #endif
