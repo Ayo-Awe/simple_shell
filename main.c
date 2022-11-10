@@ -35,6 +35,9 @@ int main(__attribute__((unused)) int argc, char *argv[], char *env[])
 		if (_strcmp(args[0], "exit") == 0)
 		{
 			exitCode = _atoi(args[1]);
+
+			free_split(args);
+
 			if (exitCode == -1)
 				exit(1);
 
