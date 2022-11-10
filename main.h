@@ -15,4 +15,9 @@ char *prefix(char *prefix, char *str);
 char *_strdup(char *str);
 int _pow(int x, int y);
 int _atoi(char *str);
+int _strncmp(char *s1, char *s2, unsigned int n);
+char *_itoa(int a);
+void replace_variables(char **args, int status, char **env);
+void reverse_string(char *s);
+int _abs(int d);
 #endif

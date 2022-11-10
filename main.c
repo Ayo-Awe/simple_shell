@@ -29,6 +29,7 @@ int main(__attribute__((unused)) int argc, char *argv[], char *env[])
 		free(input);
 
 		/* Handle replacements */
+		replace_variables(args, status, env);
 
 		/* Check if command is  an exit shell command*/
 		if (_strcmp(args[0], "exit") == 0)
