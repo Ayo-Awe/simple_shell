@@ -20,7 +20,8 @@ int main(__attribute__((unused)) int argc, char *argv[], char *env[])
 {
 	char *input = NULL, *cmd;
 	char **args;
-	int exitCode = 1, status;
+	int exitCode = 1;
+	int status = 0;
 
 	while (*(input = prompt()) != EOF)
 	{

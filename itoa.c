@@ -1,5 +1,6 @@
 #include "main.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 int number_of_digits(unsigned int d);
 
@@ -70,5 +71,5 @@ int number_of_digits(unsigned int d)
 		d /= 10;
 	}
 
-	return (d + 1);
+	return (count + 1);
 }

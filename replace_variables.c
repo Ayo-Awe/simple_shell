@@ -7,7 +7,7 @@
 char *_getenv(char *var, char **env);
 
 /**
- * replace_variable - replaces variables in a shell program denoted by $
+ * replace_variables - replaces variables in a shell program denoted by $
  * @args: array strings containing the command and its arguments
  * @status: exit status of previously executed program
  * @env: Array of environment variables
@@ -76,8 +76,9 @@ char *_getenv(char *var, char **env)
 		/* the environment varible exists */
 		if (_strncmp(var, env[i], len) == 0)
 		{
-			/* Copy variable value to new malloc'd memory,
-			copy only after the = sign e.g PATH=WIE -> WIE
+			/*
+			* Copy variable value to new malloc'd memory,
+			* copy only after the = sign e.g PATH=WIE -> WIE
 			 */
 			str = _strdup(&env[i][len + 1]);
 
