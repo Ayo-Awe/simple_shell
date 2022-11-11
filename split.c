@@ -34,7 +34,7 @@ char **split(char *string)
 		return (NULL);
 
 
-	while (*string)
+	while (*string && *string != '#')
 	{
 		if (*string != ' ')
 		{
@@ -107,7 +107,7 @@ int countWords(char *string)
 	int inWord = 0;
 	int inQuotes = 0;
 
-	while (*string)
+	while (*string && *string != '#')
 	{
 		/* Character is the first character in a word */
 		if (*string != ' ' && inWord == 0)

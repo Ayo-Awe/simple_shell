@@ -40,7 +40,7 @@ int main(__attribute__((unused)) int argc, char *argv[], char *env[])
 			free_split(args);
 
 			if (exitCode == -1)
-				exit(1);
+				exit(0);
 
 			exit(exitCode);
 		}
