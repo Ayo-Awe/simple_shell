@@ -45,7 +45,10 @@ char **split(char *string)
 			if (!word)
 				return (NULL);
 
-			/* If current character is a quote, copy only characters inside of the quotes */
+			/*
+			 * If current character is a quote, copy only characters
+			 * inside of the quotes
+			 */
 			if (isQuote(*string))
 			{
 				_strncpy(word, (string + 1), word_len);
@@ -79,8 +82,11 @@ int lengthOfNextWord(char *string)
 	/* Handle words in double quotes e.g "hello world" */
 	if (isQuote(*string))
 	{
-		/* The purpose of the 1 is to start counting after the quote*/
-		/* Count until a double quote is reached */
+		/*
+		 * The reason for adding 1 is to start counting after the
+		 * quote
+		 * Count until the closing quote is reached
+		 */
 		while (*(string + i + 1) && !isQuote(*(string + i + 1)))
 			i++;
 	}
