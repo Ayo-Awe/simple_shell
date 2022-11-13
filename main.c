@@ -20,29 +20,25 @@ int main(__attribute__((unused)) int argc, char *argv[], char *env[])
 {
 	char *input = NULL, *cmd;
 	char **args;
-	int exitCode = 1;
 	int status = 0;
 
 	while (*(input = prompt()) != EOF)
 	{
-
 		args = split(input);
 		free(input);
 
+		/* Skip current execution if the no command was passed */
+		if (!args)
+			continue;
+
 		/* Handle replacements */
-		replace_variables(args, status, env);
+		replace_variables(args, status);
 
-		/* Check if command is  an exit shell command*/
-		if (_strcmp(args[0], "exit") == 0)
+		/* Handle built in commands */
+		if (handle_builtins(args, argv[0]))
 		{
-			exitCode = _atoi(args[1]);
-
 			free_split(args);
-
-			if (exitCode == -1)
-				exit(0);
-
-			exit(exitCode);
+			continue;
 		}
 
 		/* Get full command path e.g ls -> /bin/ls */
