@@ -22,7 +22,7 @@ int main(__attribute__((unused)) int argc, char *argv[], char *env[])
 	char **args;
 	int status = 0;
 
-	while (*(input = prompt()) != EOF && *input)
+	while ((*(input = prompt()) != EOF) && *input)
 	{
 		args = split(input);
 		free(input);
@@ -47,7 +47,7 @@ int main(__attribute__((unused)) int argc, char *argv[], char *env[])
 		if (!cmd)
 		{
 			/* If command doesn't exist skip the current execute */
-			_puts("Error");
+			_puts("Error\n");
 			free_split(args);
 			continue;
 		}
@@ -63,6 +63,7 @@ int main(__attribute__((unused)) int argc, char *argv[], char *env[])
 		free_split(args);
 	}
 
+	free(input);
 	return (0);
 }
 
