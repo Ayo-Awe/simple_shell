@@ -26,8 +26,8 @@ char *prompt(void)
 
 	if (chars_read == -1)
 	{
-		exit(0);
 		free(input);
+		exit(0);
 	}
 
 	/* Get rid of the new line character*/
