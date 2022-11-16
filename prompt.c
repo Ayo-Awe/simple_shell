@@ -11,7 +11,7 @@ char *get_relative_dir(char *working_dir);
  * enter a command
  *
  * Return: void
-*/
+ */
 char *prompt(void)
 {
 	char *input = NULL;
@@ -19,8 +19,12 @@ char *prompt(void)
 	ssize_t chars_read;
 	size_t size = 0;
 
-	prompt_string = "$ ";
-	_puts(prompt_string);
+	prompt_string = get_prompt_string("\033[0;32m#aweshell\033[0m:\033[0;34m");
+
+	if (isatty(STDIN_FILENO == 1))
+		_puts(prompt_string);
+
+	free(prompt_string);
 
 	chars_read = getline(&input, &size, stdin);
 
@@ -41,7 +45,7 @@ char *prompt(void)
  * @str: any string that you'd like before the directory
  *
  * Return: malloc'd string or NULL on error.
-*/
+ */
 char *get_prompt_string(char *str)
 {
 	char *prompt_string, *working_dir, *tmp;
@@ -74,7 +78,6 @@ char *get_prompt_string(char *str)
 	_strcat(prompt_string, working_dir);
 	_strcat(prompt_string, "\033[0m$ ");
 
-
 	free(working_dir);
 
 	return (prompt_string);
@@ -87,7 +90,7 @@ char *get_prompt_string(char *str)
  *
  * Return: malloc'd string or NULL on error and if working_dir doesn't
  * begin with /home/
-*/
+ */
 char *get_relative_dir(char *working_dir)
 {
 	char *relative_dir = NULL;
@@ -99,9 +102,9 @@ char *get_relative_dir(char *working_dir)
 	if (_strncmp(working_dir, "/home/", 6) == 0)
 	{
 		/*
-		* Skip over the username of the home directory e.g /home/aweayo/python
-		* --> /python
-		*/
+		 * Skip over the username of the home directory e.g /home/aweayo/python
+		 * --> /python
+		 */
 		working_dir += 6;
 		while (*working_dir != '/' && *working_dir)
 			working_dir++;
@@ -121,5 +124,3 @@ char *get_relative_dir(char *working_dir)
 
 	return (NULL);
 }
-
-

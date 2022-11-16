@@ -6,8 +6,8 @@
  * @c: character
  *
  * Return: void
-*/
+ */
 void _putchar(char c)
 {
-	write(0, &c, 1);
+	write(STDOUT_FILENO, &c, 1);
 }
