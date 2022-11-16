@@ -41,10 +41,10 @@ aweayo
 
 However, the following commands are supported yet
 
-* Chande Directory - `cd`
+* Change Directory - `cd`
 * Command Seperators - `;`
 * Logical Operators - `&&,` `||`
-* alais
+* alias
 * setenv and unsetenv
 
 
