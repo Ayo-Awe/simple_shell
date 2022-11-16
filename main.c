@@ -25,13 +25,11 @@ int main(__attribute__((unused)) int argc, char *argv[], char *env[])
 	int status = 0;
 
 	signal(SIGINT, handle_sigint);
-
 	while (*(input = prompt()))
 	{
 		args = split(input);
 		free(input);
 
-		signal(SIGINT, handle_sigint);
 
 		/* Skip current execution if the no command was passed */
 		if (!args)
@@ -118,5 +116,5 @@ void handle_sigint(int sig)
 {
 	(void) sig;
 
-	write(STDOUT_FILENO, "\n:)", 3);
+	write(STDERR_FILENO, "\n$", 2);
 }

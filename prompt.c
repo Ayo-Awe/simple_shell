@@ -19,10 +19,8 @@ char *prompt(void)
 	ssize_t chars_read;
 	size_t size = 0;
 
-	prompt_string = get_prompt_string("\033[0;32m#aweshell\033[0m:\033[0;34m");
+	prompt_string = "$ ";
 	_puts(prompt_string);
-
-	free(prompt_string);
 
 	chars_read = getline(&input, &size, stdin);
 
