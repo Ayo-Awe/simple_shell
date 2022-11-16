@@ -26,7 +26,7 @@ char *prompt(void)
 
 	if (chars_read == -1)
 	{
-		exit(1);
+		exit(0);
 		free(input);
 	}
 
