@@ -25,7 +25,7 @@ char *get_command(char *command)
 		return (NULL);
 
 	/* Path exists */
-	if (stat(command_copy, &st) == 0)
+	if (lstat(command_copy, &st) == 0)
 	{
 		free(bin_command);
 		free(custom_command);
@@ -34,7 +34,7 @@ char *get_command(char *command)
 
 	free(command_copy);
 
-	if (stat(bin_command, &st) == 0)
+	if (lstat(bin_command, &st) == 0)
 	{
 		free(custom_command);
 		return (bin_command);
@@ -42,7 +42,7 @@ char *get_command(char *command)
 
 	free(bin_command);
 
-	if (stat(custom_command, &st) == 0)
+	if (lstat(custom_command, &st) == 0)
 		return (custom_command);
 
 	free(custom_command);
