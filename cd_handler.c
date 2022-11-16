@@ -24,7 +24,7 @@ void cd_handler(char **args)
 	else
 	{
 		path = getcwd(NULL, 0);
-		setenv("PWD", path, 1);
+		/*setenv("PWD", path, 1);*/
 		free(path);
 	}
 

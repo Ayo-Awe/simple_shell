@@ -47,7 +47,7 @@ int main(__attribute__((unused)) int argc, char *argv[], char *env[])
 		if (!cmd)
 		{
 			/* If command doesn't exist skip the current execute */
-			printf("%s: command not found\n", args[0]);
+			_puts("Error");
 			free_split(args);
 			continue;
 		}
