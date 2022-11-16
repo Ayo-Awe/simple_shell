@@ -5,8 +5,10 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <signal.h>
 
 void fork_n_execute(char **args, char *env[], char *argv[], int *status);
+void handle_sigint(int sig);
 
 /**
  * main - entry point
@@ -22,10 +24,14 @@ int main(__attribute__((unused)) int argc, char *argv[], char *env[])
 	char **args;
 	int status = 0;
 
-	while ((*(input = prompt()) != EOF) && *input)
+	signal(SIGINT, handle_sigint);
+
+	while (*(input = prompt()))
 	{
 		args = split(input);
 		free(input);
+
+		signal(SIGINT, handle_sigint);
 
 		/* Skip current execution if the no command was passed */
 		if (!args)
@@ -100,4 +106,17 @@ void fork_n_execute(char **args, char *env[], char *argv[], int *status)
 		wait(status);
 	}
 
+}
+
+/**
+ * handle_sigint - handler for signal
+ * @sig: signal
+ *
+ * Return: void
+*/
+void handle_sigint(int sig)
+{
+	(void) sig;
+
+	write(STDOUT_FILENO, "\n:)", 3);
 }
