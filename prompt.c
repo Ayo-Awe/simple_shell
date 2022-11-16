@@ -27,7 +27,11 @@ char *prompt(void)
 	chars_read = getline(&input, &size, stdin);
 
 	if (chars_read == -1)
+	{
 		perror("Couldn't read input");
+		free(input);
+		exit(1);
+	}
 
 	/* Get rid of the new line character*/
 	input[chars_read - 1] = ' ';

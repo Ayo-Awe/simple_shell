@@ -22,7 +22,7 @@ int main(__attribute__((unused)) int argc, char *argv[], char *env[])
 	char **args;
 	int status = 0;
 
-	while (*(input = prompt()) != EOF)
+	while (*(input = prompt()) != EOF && *input)
 	{
 		args = split(input);
 		free(input);
