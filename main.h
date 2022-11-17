@@ -28,10 +28,23 @@ void exit_handler(char **args);
 void cd_handler(char **args);
 void (*get_builtin_func(char *command))(char **);
 /**
+ * struct path - llinked list for path environment variable
+ * @path: string pointer representing path
+ * @next: pointer to next path
+ */
+typedef struct path
+{
+	char *path;
+	struct path *next;
+} path_t;
+
+void free_path_list(path_t **head);
+path_t *generate_path_list(path_t **head);
+/**
  * struct builtin - struct for built in commands
  * @command: string representing the function command
  * @handler: the function that carries out the command
-*/
+ */
 typedef struct builtin
 {
 	char *command;

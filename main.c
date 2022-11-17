@@ -17,7 +17,7 @@ void handle_sigint(int sig);
  * @env: environment variables
  *
  * Return: Always 0
-*/
+ */
 int main(__attribute__((unused)) int argc, char *argv[], char *env[])
 {
 	char *input = NULL, *cmd;
@@ -29,7 +29,6 @@ int main(__attribute__((unused)) int argc, char *argv[], char *env[])
 	{
 		args = split(input);
 		free(input);
-
 
 		/* Skip current execution if the no command was passed */
 		if (!args)
@@ -82,7 +81,7 @@ int main(__attribute__((unused)) int argc, char *argv[], char *env[])
  * executed process is stored
  *
  * Return: void
-*/
+ */
 void fork_n_execute(char **args, char *env[], char *argv[], int *status)
 {
 	pid_t child;
@@ -103,7 +102,6 @@ void fork_n_execute(char **args, char *env[], char *argv[], int *status)
 		/* Wait for child process to exit before continuing*/
 		wait(status);
 	}
-
 }
 
 /**
@@ -111,10 +109,10 @@ void fork_n_execute(char **args, char *env[], char *argv[], int *status)
  * @sig: signal
  *
  * Return: void
-*/
+ */
 void handle_sigint(int sig)
 {
-	(void) sig;
+	(void)sig;
 
 	write(STDERR_FILENO, "\n$", 2);
 }

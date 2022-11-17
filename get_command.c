@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include "main.h"
 
-
 /**
  * get_command - checks if a command exists
  * @command: a malloc'd string pointer representing command
@@ -13,39 +12,47 @@
  * Return: pointer to original command string if command
  * exists without /bin/ prefix,
  * a malloc'd string if prefix was needed otherwise NULL
-*/
+ */
 char *get_command(char *command)
 {
 	struct stat st;
-	char *bin_command = prefix("/bin/", command);
-	char *custom_command = prefix("./programs/", command);
+	char *full_command = NULL;
+	path_t *current, *head = NULL;
 	char *command_copy = _strdup(command);
 
-	if (!bin_command || !custom_command || !command_copy)
+	if (!command || !command_copy)
 		return (NULL);
 
 	/* Path exists */
 	if (lstat(command_copy, &st) == 0)
 	{
-		free(bin_command);
-		free(custom_command);
 		return (command_copy);
 	}
 
 	free(command_copy);
 
-	if (lstat(bin_command, &st) == 0)
+	if (generate_path_list(&head) == NULL)
+		return (NULL);
+
+	current = head;
+	while (current)
 	{
-		free(custom_command);
-		return (bin_command);
+		full_command = prefix(current->path, command);
+
+		if (!full_command)
+			return (NULL);
+
+		/* Path exists */
+		if (lstat(full_command, &st) == 0)
+		{
+			free_path_list(&head);
+			return (full_command);
+		}
+
+		free(full_command);
+		current = current->next;
 	}
 
-	free(bin_command);
-
-	if (lstat(custom_command, &st) == 0)
-		return (custom_command);
-
-	free(custom_command);
-
+	free_path_list(&head);
 	return (NULL);
 }
