@@ -40,6 +40,7 @@ typedef struct path
 
 void free_path_list(path_t **head);
 path_t *generate_path_list(path_t **head);
+char *add_option(char *command, char *flag, char *value);
 /**
  * struct builtin - struct for built in commands
  * @command: string representing the function command

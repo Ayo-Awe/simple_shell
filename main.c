@@ -20,13 +20,20 @@ void handle_sigint(int sig);
  */
 int main(__attribute__((unused)) int argc, char *argv[], char *env[])
 {
-	char *input = NULL, *cmd;
+	char *input = NULL, *cmd, *tmp;
 	char **args;
 	int status = 0;
 
 	signal(SIGINT, handle_sigint);
 	while (*(input = prompt()))
 	{
+		if (_strncmp("ls", input, 2) == 0)
+		{
+			tmp = add_option(input, "--color", "auto");
+			free(input);
+			input = tmp;
+		}
+
 		args = split(input);
 		free(input);
 
@@ -55,7 +62,7 @@ int main(__attribute__((unused)) int argc, char *argv[], char *env[])
 			continue;
 		}
 
-		/* Free previous command before overwriting it*/
+		/* Free previous command arg[0] before overwriting it*/
 		free(args[0]);
 		args[0] = cmd;
 

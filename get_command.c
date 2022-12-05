@@ -28,9 +28,9 @@ char *get_command(char *command)
 	{
 		return (command_copy);
 	}
-
 	free(command_copy);
 
+	/* Generates a linked list of all paths in PATH env variable*/
 	if (generate_path_list(&head) == NULL)
 		return (NULL);
 
